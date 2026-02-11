@@ -2,10 +2,11 @@ import { ArrowLeft, Sparkle, TextIcon, Upload } from 'lucide-react'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 
-const StoryModel = ({setShowModel, fetchStories}) => {
+const StoryModel = ({setShowModal, fetchStories}) => {
 
     const bgColors = ["#4f46e5", '#7c3aed', '#db2777', '#e11d48', '#ca8a04', '#0d9488']
 
+    const [media, setMedia] = useState('null')
     const [mode, setMode] = useState("text")
     const [background, setBackground] = useState(bgColors[0])
     const [text, setText] = useState("")
@@ -27,7 +28,7 @@ const StoryModel = ({setShowModel, fetchStories}) => {
     text-white flex items-center justify-center p-4'>
         <div className='w-full max-w-md'>
             <div className='text-center mb-4 flex items-center justify-between'>
-                <button onClick={()=> setShowModel(false)} className='text-white p-2 cursor-pointer'>
+                <button onClick={()=> setShowModal(false)} className='text-white p-2 cursor-pointer'>
                     <ArrowLeft />
                 </button>
                 <h2 className='text-lg font-semibold'>Create Story</h2>
@@ -55,7 +56,7 @@ const StoryModel = ({setShowModel, fetchStories}) => {
 
             <div className='flex mt-4 gap-2'>
                 {bgColors.map((color)=>(
-                    <button key={color} className='w-6 h-6 rounded-full ring cursor-pointer'
+                    <button key={color} className={`w-6 h-6 rounded-full ring cursor-pointer transition-all ${background === color ? 'ring-4 ring-white' : 'ring-1 ring-gray-400'}`}
                     style = {{backgroundColor: color}} onClick={()=>setBackground(color)}/>
                 ))}
             </div>
