@@ -4,6 +4,7 @@ import { format } from "path"
 import imagekit from "../configs/imageKit.js"
 import User from "../models/User.js"
 import fs from 'fs'
+import Connection from "../models/connection.js"
 
 export const getUserData = async (req, res) => {
     try {
@@ -193,5 +194,112 @@ export const unfollowUser = async (req, res) => {
     }
 }
 
+
+
+// send connection request
+
+export const sendConnectionRequest = async (req, res) => {
+    try {
+        const {userId} = req.auth()
+        const { id } = req.body
+
+        // checking if user sent more than 20 connection request in the past 24 hours
+
+        const last24Hours = new Date(Date.now() - 24 * 60* 60* 1000)
+        const connectionRequest = await Connection.find({from_user_id: userId,
+            createdAt: {$gt: last24Hours}
+        })
+        if(connectionRequest.length >= 20){
+            return res.json({success: false, message: "More than 20 connection request sent in the past 24 hours"})
+
+        }
+
+        // cheking if users are already connected
+
+        const connection = await Connection.findOne({
+            $or: [
+                {from_user_id: userId, to_user_id: id},
+                {from_user_id: id, to_user_id: userId},
+            ]
+        })
+        if(!connection){
+            await Connection.create({
+                from_user_id: userId,
+                to_user_id: id
+            })
+            return res.json({success: false,
+            message: "Connection Request sent Successfully"})
+
+        }
+        else if(connection && connection.status === 'accepted'){
+            return res.json({success: false, message: "Already Connected with the user"})
+        }
+        return res.json({success: false, message: "Connection request pending"})
+
+    } catch (error) {
+        console.log(error)
+        res.json({success: false, message: error.message})
+
+    }
+}
+
+//get User Connections
+
+
+export const getUserConnections = async (req, res) => {
+    try {
+        const {userId} = req.auth()
+        const user = await User.findById(userId).populate('connections followers following')
+        const connections = user.connections
+        const followers = user.followers
+        const following = user.following
+
+
+        const pendingConnections = (await Connection.find({to_user_id: userId,
+        status: 'pending'}).populate('from_user_id')).map(connection => connection.from_user_id)
+
+        res.json({success: true, connections, followers, following, pendingConnections})
+
+
+    } catch (error) {
+        console.log(error)
+        res.json({success: false, message: error.message})
+
+    }
+}
+
+// accept connection request
+
+export const acceptConnectionRequest = async (req, res) => {
+    try {
+        const {userId} = req.auth()
+        const { id } = req.body
+
+        const connection = await Connection.findOne({from_user_id: id, to_user_id: userId})
+
+        if(!connection){
+            return res.json({success:false, message: 'Connection not found'})
+        }
+
+        const user = await User.findById(userId)
+        user.connections.push(id)
+        await user.save()
+
+        const toUser = await User.findById(id)
+        toUser.connections.push(userId)
+        await toUser.save()
+
+        connection.status = 'accepted'
+        await connection.save()
+
+        res.json({success: true, message: 'Connection was accepted'})
+
+
+    } catch (error) {
+        console.log(error)
+        res.json({success: false, message: error.message})
+
+    }
+}
 
 
