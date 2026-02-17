@@ -22,4 +22,4 @@ const sendEmail = async({to, subject, body}) => {
 }
 
 
-export default sendMail
+export default sendEmail
