@@ -5,7 +5,7 @@ import { protect } from "../middleware/auth.js"
 
 const storyRouter = express.Router()
 
-storyRouter.post('/story', upload.single('media'),protect, addUserStory)
-storyRouter.get('/story', protect, getStories)
+storyRouter.post('/create', upload.single('media'),protect, addUserStory)
+storyRouter.get('/get', protect, getStories)
 
 export default storyRouter
