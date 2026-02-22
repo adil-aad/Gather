@@ -1,22 +1,34 @@
 import React from 'react'
-import { menuItemsData } from '../assets/assets'
 import { NavLink } from 'react-router-dom'
+import { menuItemsData } from '../assets/assets'
 
-const MenuItems = ({setSidebarOpen}) => {
+const MenuItems = ({ setSidebarOpen }) => {
   return (
-    <div className='px-6 text-gray-600 space-y-1 font-medium'>
-        {
-            menuItemsData.map(({to, label, Icon})=>(
-                <NavLink key={to} to={to} end={to === '/'} onClick={()=> setSidebarOpen(false)}
-                className={({isActive}) => `px-3.5 py-2 flex items-center gap-3 rounded-xl ${isActive ? 'bg-indigo-50 text-indigo-700' :
-                'hover:bg-gray-50'}`}>
-                    <Icon className='w-5 h-5'/>
-                    {label}
-                    
-                </NavLink>
-            ))
-        }
-    </div>
+    <nav className='space-y-1.5'>
+      {menuItemsData.map((item) => (
+        <NavLink
+          key={item.to}
+          to={item.to}
+          onClick={() => setSidebarOpen?.(false)}
+          className={({ isActive }) => `flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm transition-all duration-200 ${
+            isActive
+              ? 'bg-white text-slate-900 shadow-[0_8px_20px_rgba(15,23,42,0.08)] ring-1 ring-slate-200'
+              : 'text-slate-600 hover:bg-white/70 hover:text-slate-800'
+          }`}
+        >
+          <div className='flex items-center gap-3'>
+            <item.Icon className='h-5 w-5' />
+            <span className='font-medium'>{item.label}</span>
+          </div>
+
+          {item.badge && (
+            <span className='min-w-[22px] rounded-full bg-blue-100 px-2 py-0.5 text-center text-xs font-semibold text-blue-700'>
+              {item.badge}
+            </span>
+          )}
+        </NavLink>
+      ))}
+    </nav>
   )
 }
 

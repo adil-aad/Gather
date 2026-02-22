@@ -1,96 +1,94 @@
 import { BadgeCheck, X } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
-const StoryViewer = ({viewStory, setViewStory}) => {
+const StoryViewer = ({ viewStory, setViewStory }) => {
+  const [progress, setProgress] = useState(0)
 
-    const [progress ,setProgress] = useState(0)
+  useEffect(() => {
+    let timer
+    let progressInterval
 
-    useEffect(()=> {
-        let timer, progressInterval
-        if(viewStory && viewStory.media_type !== 'video'){
-            setProgress(0)
+    if (viewStory && viewStory.media_type !== 'video') {
+      setProgress(0)
 
-            const duration = 10000
-            const setTime = 100
-            let elapsed =0
+      const duration = 10000
+      const stepTime = 100
+      let elapsed = 0
 
-            progressInterval = setInterval(() => {
-                elapsed += setTime
-                setProgress(elapsed/duration *100)
-            }, setTime);
+      progressInterval = setInterval(() => {
+        elapsed += stepTime
+        setProgress((elapsed / duration) * 100)
+      }, stepTime)
 
-            // close after 10 sec
-
-            timer = setTimeout(() => {
-                setViewStory(null)
-            }, duration);
-        }
-
-        return () => {
-            clearTimeout(timer)
-            clearInterval(progressInterval)
-        }
-    },[viewStory, setViewStory])
-
-    const handleClose = () => {
+      timer = setTimeout(() => {
         setViewStory(null)
+      }, duration)
     }
 
-    if(!viewStory) return null
-
-    const renderContent = () =>{
-        switch (viewStory.media_type) {
-            case 'image':
-                return (
-                    <img src={viewStory.media_url} alt="" className='max-w-full max-h-screen object-contain' />
-                );
-            case 'video':
-                return (
-                    <video onEnded= {() => setViewStory(null)} src={viewStory.media_url} className='max-w-full max-h-screen'
-                    controls autoPlay />
-                );
-            case 'text':
-                return (
-                    <div className='w-full h-full flex items-center justify-center p-8 text-white text-2xl text-center'>
-                        {viewStory.content}
-                    </div>
-                )
-                
-            default:
-                return null
-        }
+    return () => {
+      clearTimeout(timer)
+      clearInterval(progressInterval)
     }
+  }, [viewStory, setViewStory])
+
+  if (!viewStory) return null
+
+  const handleClose = () => setViewStory(null)
+
+  const renderContent = () => {
+    switch (viewStory.media_type) {
+      case 'image':
+        return <img src={viewStory.media_url} alt='' className='max-w-full max-h-[84vh] object-contain rounded-2xl shadow-2xl' />
+      case 'video':
+        return (
+          <video
+            onEnded={() => setViewStory(null)}
+            src={viewStory.media_url}
+            className='max-w-full max-h-[84vh] rounded-2xl shadow-2xl'
+            controls
+            autoPlay
+          />
+        )
+      case 'text':
+        return (
+          <div
+            className='w-[min(92vw,680px)] min-h-[52vh] rounded-3xl shadow-2xl ring-1 ring-white/20 flex items-center justify-center p-10 text-white text-2xl leading-relaxed text-center'
+            style={{
+              background: `linear-gradient(180deg, ${viewStory.background_color || '#6d28d9'}, #3b0764)`
+            }}
+          >
+            {viewStory.content}
+          </div>
+        )
+      default:
+        return null
+    }
+  }
+
   return (
-    <div className='fixed inset-0 h-screen bg-black bg-opacity-90 z-110 flex items-center justify-center' 
-    style={{backgroundColor: viewStory.media_type === 'text' ? viewStory.background_color : '#000000'}}>
-        {/* Progress Bar*/}
-        <div className='absolute top-0 left-0 w-full h-1 bg-gray-700'>
-            <div className='h-full bg-white transition-all duration-100 linear' 
-            style={{width: `${progress}%`}}>
-                 
-            </div>
+    <div className='fixed inset-0 z-[110] bg-gradient-to-b from-slate-950/95 to-black flex items-center justify-center p-4'>
+      <div className='absolute top-0 left-0 w-full h-1 bg-white/15'>
+        <div className='h-full bg-gradient-to-r from-violet-400 to-fuchsia-400 transition-all duration-100' style={{ width: `${progress}%` }} />
+      </div>
+
+      <div className='absolute top-4 left-4 flex items-center gap-3 rounded-2xl bg-black/45 px-3 py-2 backdrop-blur-md ring-1 ring-white/20'>
+        <img src={viewStory.user?.profile_picture} alt='' className='size-8 rounded-full object-cover border border-white/70' />
+        <div className='text-white text-sm font-medium flex items-center gap-1.5'>
+          <span>{viewStory.user?.full_name}</span>
+          <BadgeCheck size={16} className='text-violet-300' />
         </div>
+      </div>
 
-        {/* user Info top left*/}
+      <button
+        onClick={handleClose}
+        className='absolute top-4 right-4 rounded-xl bg-black/45 p-2 text-white hover:bg-black/60 transition cursor-pointer backdrop-blur-md ring-1 ring-white/20'
+      >
+        <X className='w-6 h-6' />
+      </button>
 
-        <div className='absolute top-4 left-4 flex items-center space-x-3 p-2 px-4 sm:p-4 sm:px:8 backdrop-blur-2x1 rounded bg-black/50'>
-            <img src={viewStory.user?.profile_picture} alt="" className='size-7 sm:size-8 rounded-full object-cover border border-white'/>
-            <div className='text-white font-medium flex items-center gap-1.5'>
-                <span>{viewStory.user?.full_name}</span>
-                <BadgeCheck size ={18}/>
-            </div>
-        </div>
-
-        {/*  close button*/}
-        <button onClick={handleClose} className='absolute top-4 right-4 text-white text-3xl font-bold focus:outline-none'>
-            <X className='w-8 h-8 hover:scale-110 transition cursor-pointer'/>
-        </button>
-
-        {/* content wrapper*/}
-        <div className='max-w-[90vw] max-h-[90vh] flex items-center justify-center'>
-            {renderContent()}
-        </div>
-
+      <div className='w-full flex items-center justify-center'>
+        {renderContent()}
+      </div>
     </div>
   )
 }
