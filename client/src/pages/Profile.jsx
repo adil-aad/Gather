@@ -50,10 +50,10 @@ const Profile = () => {
   }, [profileId,currentUser])
 
   return user? (
-    <div className='relative h-full overflow-y-scroll bg-gray-50 p-6'>
+    <div className='relative h-full overflow-y-scroll bg-gray-50 p-6 dark:bg-slate-900'>
       <div className='max-w-3xl mx-auto'>
         {/* Profile card*/}
-        <div className='bg-white rounded-2xl shadow overflow-hidden'>
+        <div className='bg-white rounded-2xl shadow overflow-hidden dark:bg-slate-800'>
 
           {/* cover photo*/}
           <div className='h-40 md:h-56 bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200'>
@@ -68,10 +68,10 @@ const Profile = () => {
         </div>
         {/* Tabs */}
         <div className='mt-6'>
-          <div  className='bg-white rounded-xl shadow p-1 flex max-w-md mx-auto'>
+          <div  className='bg-white rounded-xl shadow p-1 flex max-w-md mx-auto dark:bg-slate-800'>
             {['posts', 'media', 'likes'].map((tab)=>(
               <button key={tab} onClick={()=>setActiveTab(tab)} className={`flex-1 px-4 py-2 text-sm font-medium rounded-lg transition-colors
-                cursor-pointer ${activeTab === tab ? "bg-indigo-600 text-white" : "text-gray-600 hover:text-gray-900"}`}>
+                cursor-pointer ${activeTab === tab ? "bg-indigo-600 text-white" : "text-gray-600 hover:text-gray-900 dark:text-slate-300 dark:hover:text-slate-100"}`}>
                   {tab.charAt(0).toUpperCase() + tab.slice(1)}
                 </button>
             ))}

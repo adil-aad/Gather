@@ -20,14 +20,14 @@ const Layout = () => {
         />
       )}
 
-      <div className='flex-1 bg-slate-50'>
+      <div className='flex-1 bg-slate-50 dark:bg-slate-900'>
         <Outlet />
       </div>
 
       {sidebarOpen ? (
         <button
           type='button'
-          className='absolute top-3 right-3 z-40 rounded-xl bg-white/90 p-2 shadow text-slate-700 sm:hidden'
+          className='absolute top-3 right-3 z-40 rounded-xl bg-white/90 p-2 shadow text-slate-700 sm:hidden dark:bg-slate-800 dark:text-slate-100'
           onClick={() => setSidebarOpen(false)}
           aria-label='Close sidebar'
         >
@@ -36,7 +36,7 @@ const Layout = () => {
       ) : (
         <button
           type='button'
-          className='absolute top-3 right-3 z-40 rounded-xl bg-white/90 p-2 shadow text-slate-700 sm:hidden'
+          className='absolute top-3 right-3 z-40 rounded-xl bg-white/90 p-2 shadow text-slate-700 sm:hidden dark:bg-slate-800 dark:text-slate-100'
           onClick={() => setSidebarOpen(true)}
           aria-label='Open sidebar'
         >

@@ -52,28 +52,28 @@ const CreatePost = () => {
   }
 
   return (
-    <div className='min-h-screen bg-gradient-to-b from-slate-50 to-white'>
+    <div className='min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-900'>
       <div className='max-w-6xl mx-auto p-6'>
         {/* Title */}
         <div className='mb-8'>
-          <h1 className='text-3xl font-bold text-slate-900 mb-2'>Create Post</h1>
-          <p className='text-slate-600'>Share your Mind</p>
+          <h1 className='text-3xl font-bold text-slate-900 mb-2 dark:text-slate-100'>Create Post</h1>
+          <p className='text-slate-600 dark:text-slate-300'>Share your Mind</p>
         </div>
 
         {/* Form*/}
-        <div className='max-w-xl bg-white p-4 sm:pb-3 rounded-xl shadow-md space-y-4'>
+        <div className='max-w-xl bg-white p-4 sm:pb-3 rounded-xl shadow-md space-y-4 dark:bg-slate-800'>
           {/* Header*/}
 
           <div className='flex items-center gap-3'>
             <img src={user.profile_picture} alt="" className='w-12 h-12 rounded-full shadow'/>
             <div>
               <h2 className='font-semibold'>{user.full_name}</h2>
-              <p className='text-sm text-gray-500'>@{user.username}</p>
+              <p className='text-sm text-gray-500 dark:text-slate-300'>@{user.username}</p>
             </div>
           </div>
 
           {/* Text area*/}
-          <textarea className='w-full resize-none max-h-20 mt-4 text-sm outline-none palceholder-gray-400'
+          <textarea className='w-full resize-none max-h-20 mt-4 text-sm outline-none palceholder-gray-400 dark:text-slate-100 dark:placeholder-slate-400'
           placeholder="What's up" onChange={(e)=> setContent(e.target.value)} value={content}/>
 
           {/* Images*/}
@@ -92,9 +92,9 @@ const CreatePost = () => {
           }
           {/* Bottom bar*/}
 
-          <div className='flex items-center justify-between pt-3 border-t border-gray-300'>
+          <div className='flex items-center justify-between pt-3 border-t border-gray-300 dark:border-slate-700'>
             <label htmlFor="images" className='flex items-center gap-2 text-sm text-gray-500 
-            hover:text-gray-700 transition cursor-pointer'>
+            hover:text-gray-700 transition cursor-pointer dark:text-slate-300 dark:hover:text-slate-100'>
               <Image className='size-6'/>
             </label>
 

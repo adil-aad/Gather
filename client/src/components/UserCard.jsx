@@ -48,20 +48,20 @@ const UserCard = ({user}) => {
     }
   return (
     <div key={user._id} className='p-4 pt-6 flex flex-col justify-between w-72 shadow
-    border border-gray-200 rounded-md'>
+    border border-gray-200 rounded-md dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100'>
         <div className='text-center'>
             <img src={user.profile_picture} alt="" className='rounded-full w-16 shadow-md mx-auto' />
             <p className='mt-4 font-semibold'>{user.full_name}</p>
-            {user.username && <p className='text-gray-500 font-light'>@{user.username}</p>}
-            {user.bio && <p className='text-gray-600 text-center text-sm px-4'>{user.bio}</p>}
+            {user.username && <p className='text-gray-500 font-light dark:text-slate-300'>@{user.username}</p>}
+            {user.bio && <p className='text-gray-600 text-center text-sm px-4 dark:text-slate-300'>{user.bio}</p>}
         </div>
 
-        <div className='flex items-center justify-center gap-2 mt-4 text-xs text-gray-600'>
-            <div className='flex items-center gap-1 border border-gray-300 
+        <div className='flex items-center justify-center gap-2 mt-4 text-xs text-gray-600 dark:text-slate-300'>
+            <div className='flex items-center gap-1 border border-gray-300 dark:border-slate-600
             rounded-full px-3 py-1'>
                 <MapPin className='w-4 h-4'/> {user.location}
             </div>
-            <div className='flex items-center gap-1 border border-gray-300 
+            <div className='flex items-center gap-1 border border-gray-300 dark:border-slate-600
             rounded-full px-3 py-1'>
                 <span>{user.followers.length}</span> Followers
             </div>
@@ -76,7 +76,7 @@ const UserCard = ({user}) => {
             </button>
 
             {/* connection request button*/}
-            <button onClick={handleConnectionRequest} className='flex items-center justify-center w-16 border text-slate-500 group
+            <button onClick={handleConnectionRequest} className='flex items-center justify-center w-16 border text-slate-500 group dark:border-slate-600 dark:text-slate-300
             grounded-md cursor-pointer active:scale-95 transition'>
                 {
                     currentUser?.connections.includes(user._id) ? 

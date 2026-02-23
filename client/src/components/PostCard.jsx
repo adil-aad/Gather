@@ -41,7 +41,7 @@ const PostCard = ({post}) => {
     const navigate = useNavigate()
 
   return (
-    <div className='bg-white rounded-xl shadow p-4 space-y-4 w-full max-w-2xl'>
+    <div className='bg-white rounded-xl shadow p-4 space-y-4 w-full max-w-2xl dark:bg-slate-800 dark:text-slate-100'>
         {/* user info*/}
         <div onClick={()=>navigate('/profile/' + post.user._id)} className='inline-flex items-center gap-3 cursor-pointer'>
             <img src={post.user.profile_picture} alt="" className='w-10 h-10 rounded-full shadow'/>
@@ -51,12 +51,12 @@ const PostCard = ({post}) => {
                     <BadgeCheck className='w-4 h-4 text-blue-500'/>
                 </div>
 
-                <div className='text-gray-500 text-sm'>@{post.user.username} . {moment(post.createdAt).fromNow()}</div>
+                <div className='text-gray-500 text-sm dark:text-slate-300'>@{post.user.username} . {moment(post.createdAt).fromNow()}</div>
             </div>
         </div>
 
         {/* content*/}
-        {post.content && <div className='text-gray-800 text-sm whitespace-pre-line'
+        {post.content && <div className='text-gray-800 text-sm whitespace-pre-line dark:text-slate-100'
         dangerouslySetInnerHTML={{__html: postWithHashtags}}/>}
 
         {/*images */}
@@ -68,7 +68,7 @@ const PostCard = ({post}) => {
         </div>
 
         {/* Actions*/}
-        <div className='flex items-center gap-4 text-gray-600 text-sm pt-2 border-t border-gray-300'>
+        <div className='flex items-center gap-4 text-gray-600 text-sm pt-2 border-t border-gray-300 dark:border-slate-700 dark:text-slate-300'>
             <div className='flex items-center gap-1'>
                 <Heart className={`w-4 h-4 cursor-pointer ${Likes.includes(currentUser._id)
                 && 'text-red-500 fill-red-500'}`} onClick={handleLike}/>
