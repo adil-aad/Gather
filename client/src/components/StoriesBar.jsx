@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Plus, Sparkles } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import moment from 'moment'
 import StoryModel from './StoryModel'
 import StoryViewer from './StoryViewer'
@@ -39,10 +39,6 @@ const StoriesBar = () => {
     <div className='w-screen sm:w-[calc(100vw-240px)] lg:max-w-2xl px-4'>
       <div className='mb-3 flex items-center justify-between'>
         <p className='text-sm font-semibold tracking-wide text-violet-800'>Stories</p>
-        <span className='inline-flex items-center gap-1 rounded-full bg-violet-100 px-2.5 py-1 text-xs font-medium text-violet-700'>
-          <Sparkles className='h-3.5 w-3.5' />
-          Fresh
-        </span>
       </div>
 
       <div className='no-scrollbar overflow-x-auto'>
