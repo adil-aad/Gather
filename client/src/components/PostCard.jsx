@@ -1,4 +1,4 @@
-import { BadgeCheck, Heart, MessageCircle, Share2 } from 'lucide-react'
+import { BadgeCheck, Heart } from 'lucide-react'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -74,16 +74,6 @@ const PostCard = ({post}) => {
                 && 'text-red-500 fill-red-500'}`} onClick={handleLike}/>
                 <span>{Likes.length}</span>
             </div>
-            <div className='flex items-center gap-1'>
-                <MessageCircle className='w-4 h-4'/>
-                <span>{12}</span>
-            </div>
-            <div className='flex items-center gap-1'>
-                <Share2 className='w-4 h-4'/>
-                <span>{7}</span>
-            </div>
-
-
         </div>
     </div>
   )

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { assets, dummyPostsData } from '../assets/assets'
 import Loading from '../components/Loading'
 import StoriesBar from '../components/StoriesBar'
 import PostCard from '../components/PostCard'
 import RecentMessages from '../components/RecentMessages'
 import { useAuth } from '@clerk/clerk-react'
 import api from '../api/axios'
-import { Flag } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 const Feed = () => {
 
@@ -54,13 +53,6 @@ const Feed = () => {
       {/*Right side */}
 
       <div className='max-xl:hidden sticky top-0s'> 
-        <div className='max-w-xs bg-white text-xs p-4 rounded-md inline-flex dark:bg-slate-800 dark:text-slate-200
-        flex-col gap-2 shadow'>
-          <h3 className='text-slate-800 font-semibold dark:text-slate-100'>Sponsored</h3>
-          <img src={assets.sponsored_img} className='w-75 h-50 rounded-md' alt="" />
-          <p className='text-slate-600 dark:text-slate-300'>Email Marketing</p>
-          <p className='text-slate-400 dark:text-slate-400'>SuperCharge your Markeitng with the powerful, easy-to-use paltform</p>
-        </div>
         <RecentMessages />
       </div>
 

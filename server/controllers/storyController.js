@@ -54,11 +54,13 @@ export const getStories = async(req, res) => {
     try {
         const { userId } = req.auth()
         const user = await User.findById(userId)
+        const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000)
 
         const userIds = [userId, ...user.connections, ...user.following]
 
         const stories = await Story.find({
-            user: {$in: userIds}
+            user: {$in: userIds},
+            createdAt: {$gte: twentyFourHoursAgo}
         }).populate('user').sort({createdAt: -1})
 
         res.json({success: true, stories})
