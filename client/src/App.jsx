@@ -1,6 +1,6 @@
 import React, { useRef } from "react"
 import { Routes, Route, useLocation } from "react-router-dom"
-import Login from "./pages/login.jsx"
+import Login from "./pages/Login.jsx"
 import Feed from './pages/Feed.jsx'
 import Messages from './pages/Messages.jsx'
 import ChatBox from './pages/ChatBox.jsx'
