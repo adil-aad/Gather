@@ -1,6 +1,3 @@
-## `Gather/README.md`
-
-```markdown
 # Gather
 
 A MERN social network: feed, posts with media, 24-hour stories, connection
